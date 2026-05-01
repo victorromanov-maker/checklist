@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist de Beleza & Saúde — R$ 9,90</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:    #C9005A;
+    --pink2:   #E0407A;
+    --pink3:   #F472A8;
+    --purple:  #A855A0;
+    --cream:   #FFF8FB;
+    --light:   #FFF0F5;
+    --dark:    #1C0A12;
+    --gray:    #7A6870;
+    --green:   #166534;
+    --gold:    #C8960C;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 80px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1C0A12 0%, #3D0A28 40%, #1C0A12 100%);
+  }
+
+  .hero-orb1 {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,0,90,0.35) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    animation: pulse 8s ease-in-out infinite;
+  }
+  .hero-orb2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,85,160,0.3) 0%, transparent 70%);
+    bottom: -80px; right: -60px;
+    animation: pulse 10s ease-in-out infinite reverse;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge span { color: var(--pink3); }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 8vw, 72px);
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    line-height: 1.05;
+    max-width: 780px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--pink3);
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    max-width: 520px;
+    margin: 22px auto 0;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-price-box {
+    position: relative;
+    z-index: 1;
+    margin-top: 44px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    padding: 28px 40px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .price-from {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+
+  .price-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 10vw, 64px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .price-main sup { font-size: 24px; vertical-align: super; }
+
+  .price-pix {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 18px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(201,0,90,0.4);
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(201,0,90,0.55);
+  }
+  .hero-cta svg { width: 20px; height: 20px; }
+
+  .hero-guarantee {
+    margin-top: 18px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  /* ── HOOK SECTION ── */
+  .hook {
+    background: var(--light);
+    padding: 72px 24px;
+    text-align: center;
+  }
+
+  .hook-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .hook-emoji { font-size: 48px; margin-bottom: 20px; display: block; }
+
+  .hook h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .hook h2 strong { color: var(--pink); }
+
+  .hook p {
+    font-size: 17px;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+
+  .hook-callout {
+    margin-top: 36px;
+    background: #fff;
+    border: 1.5px solid var(--pink);
+    border-radius: 20px;
+    padding: 24px 28px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.6;
+    box-shadow: 0 4px 24px rgba(201,0,90,0.08);
+  }
+  .hook-callout strong { color: var(--pink); }
+
+  /* ── CHECKLIST ── */
+  .checklist-section {
+    padding: 80px 24px;
+    background: #fff;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    text-align: center;
+    color: var(--dark);
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .check-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--cream);
+    border: 1px solid #F5D0DF;
+    border-radius: 16px;
+    padding: 18px 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .check-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,0,90,0.1);
+  }
+
+  .check-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .check-info { flex: 1; }
+  .check-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .check-desc {
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+  .check-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background: var(--light);
+    color: var(--pink);
+  }
+
+  /* ── WHAT YOU GET ── */
+  .deliverables {
+    background: linear-gradient(160deg, #1C0A12 0%, #3D0A28 100%);
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .deliverables::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,0,90,0.2) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+
+  .deliverables .section-label { color: var(--pink3); }
+  .deliverables .section-title { color: #fff; }
+
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .deliv-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .deliv-check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 11px;
+    color: #fff;
+  }
+
+  .deliv-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.55;
+  }
+  .deliv-text strong { color: #fff; }
+
+  /* ── SOCIAL PROOF ── */
+  .proof {
+    background: var(--light);
+    padding: 80px 24px;
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .proof-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid #F5D0DF;
+    box-shadow: 0 2px 12px rgba(201,0,90,0.06);
+  }
+
+  .proof-stars { color: var(--gold); font-size: 16px; margin-bottom: 12px; }
+  .proof-text {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .proof-author {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--pink);
+  }
+
+  /* ── CTA FINAL ── */
+  .cta-final {
+    background: #fff;
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta-final h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 6vw, 52px);
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cta-final h2 em { color: var(--pink); font-style: italic; }
+
+  .cta-final p {
+    font-size: 16px;
+    color: var(--gray);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-box {
+    display: inline-block;
+    max-width: 480px;
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid #F5D0DF;
+    border-radius: 28px;
+    padding: 36px 32px;
+  }
+
+  .cta-price-from {
+    font-size: 13px;
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-bottom: 6px;
+  }
+  .cta-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--pink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cta-price sup { font-size: 22px; vertical-align: super; }
+  .cta-pix {
+    font-size: 12px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+  }
+
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 18px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 28px rgba(201,0,90,0.35);
+    margin-bottom: 16px;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(201,0,90,0.5);
+  }
+
+  .cta-secure {
+    font-size: 12px;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    font-size: 12px;
+    padding: 24px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── FLOATING BADGE ── */
+  .float-badge {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    border-radius: 100px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 8px 28px rgba(201,0,90,0.45);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .float-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(201,0,90,0.6);
+  }
+
+  @media (max-width: 600px) {
+    .hero-price-box { padding: 22px 24px; }
+    .cta-box { padding: 28px 20px; }
+    .float-badge { bottom: 16px; right: 16px; font-size: 13px; padding: 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING CTA -->
+<a href="COLE_AQUI_LINK_MERCADO_PAGO" class="float-badge">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  Quero por R$ 9,90
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-badge">✦ <span>Material digital exclusivo</span> ✦</div>
+
+  <h1>
+    O guia que cuida<br>
+    da sua <em>beleza</em> e<br>
+    da sua <em>saúde</em>
+  </h1>
+
+  <p class="hero-sub">
+    Mais de 30 dicas práticas, linguagem simples, sem enrolação.
+    Tudo que você precisa para se cuidar de verdade — num único guia.
+  </p>
+
+  <div class="hero-price-box">
+    <div class="price-from">De R$ 29,90</div>
+    <div class="price-main"><sup>R$</sup> 9,90</div>
+    <div class="price-pix">no Pix · acesso imediato</div>
+    <a href="COLE_AQUI_LINK_MERCADO_PAGO" class="hero-cta">
+      Quero meu Checklist agora
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="hero-guarantee">🔒 Pagamento 100% seguro via Mercado Pago</div>
+  </div>
+</section>
+
+<!-- HOOK -->
+<section class="hook">
+  <div class="hook-inner reveal">
+    <span class="hook-emoji">💬</span>
+    <h2>Quanto você gasta num <strong>iFood</strong> sem pensar?</h2>
+    <p>
+      A gente pede um lanche, um açaí, uma pizza — e nem percebe o dinheiro ir embora.
+      Por <strong>menos do que isso</strong>, você leva um guia completo que vai cuidar
+      da sua beleza, da sua saúde e — principalmente — da sua <strong>autoestima</strong>.
+    </p>
+    <div class="hook-callout">
+      Por <strong>R$ 9,90</strong> você não vai deixar de comprar nada.<br>
+      Mas vai ganhar algo que fica com você pra sempre. 💖
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-section">
+  <div class="section-label">O que está incluído</div>
+  <h2 class="section-title reveal">Tudo que você vai aprender</h2>
+
+  <div class="checklist-grid">
+    <div class="check-item reveal">
+      <div class="check-icon">🧴</div>
+      <div class="check-info">
+        <div class="check-name">Hidratação da pele</div>
+        <div class="check-desc">O que aplicar de manhã e à noite para manter a pele viçosa, sem gastar muito.</div>
+        <span class="check-tag">pele</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">☀️</div>
+      <div class="check-info">
+        <div class="check-name">Protetor solar diário</div>
+        <div class="check-desc">Por que o FPS 30+ é o item mais importante da sua rotina e como usar certo.</div>
+        <span class="check-tag">essencial</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">💇</div>
+      <div class="check-info">
+        <div class="check-name">Rotina capilar por tipo</div>
+        <div class="check-desc">Como cuidar do cabelo liso, ondulado, cacheado ou crespo do jeito certo.</div>
+        <span class="check-tag">cabelo</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">💅</div>
+      <div class="check-info">
+        <div class="check-name">Unhas bonitas em casa</div>
+        <div class="check-desc">Dicas simples para ter unhas cuidadas todo dia sem precisar ir ao salão.</div>
+        <span class="check-tag">unhas</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">💧</div>
+      <div class="check-info">
+        <div class="check-name">Hidratação diária</div>
+        <div class="check-desc">A quantidade certa de água para o seu peso e como criar o hábito sem esquecer.</div>
+        <span class="check-tag">saúde</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">😴</div>
+      <div class="check-info">
+        <div class="check-name">Qualidade do sono</div>
+        <div class="check-desc">Rotina noturna que melhora o sono — e por que isso reflete na sua beleza.</div>
+        <span class="check-tag">bem-estar</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">🥗</div>
+      <div class="check-info">
+        <div class="check-name">Alimentação anti-inflamatória</div>
+        <div class="check-desc">O que incluir e o que reduzir para ter mais energia, menos inchaço e pele bonita.</div>
+        <span class="check-tag">saúde</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">🩺</div>
+      <div class="check-info">
+        <div class="check-name">Exames preventivos por idade</div>
+        <div class="check-desc">Os exames que toda mulher deve fazer — com frequência e alertas por faixa etária.</div>
+        <span class="check-tag">prevenção</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">🧘</div>
+      <div class="check-info">
+        <div class="check-name">Saúde mental e autoestima</div>
+        <div class="check-desc">Pequenos hábitos diários que fortalecem a autoconfiança e fazem você se sentir bem.</div>
+        <span class="check-tag">mente</span>
+      </div>
+    </div>
+    <div class="check-item reveal">
+      <div class="check-icon">👁️</div>
+      <div class="check-info">
+        <div class="check-name">Maquiagem rápida de 5 min</div>
+        <div class="check-desc">Um passo a passo minimalista para você se sentir bem mesmo nos dias corridos.</div>
+        <span class="check-tag">make</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="deliverables">
+  <div class="section-label">Tudo incluso</div>
+  <h2 class="section-title reveal">O que você leva nesse guia</h2>
+
+  <div class="deliverables-grid">
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Checklist completo</strong> imprimível de beleza e saúde</div>
+    </div>
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Rotina simples</strong>, sem termos difíceis ou complicados</div>
+    </div>
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Dicas práticas</strong> que cabem na sua vida real</div>
+    </div>
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Guia de produtos</strong> por faixa de orçamento</div>
+    </div>
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Tabela de exames</strong> preventivos por idade</div>
+    </div>
+    <div class="deliv-item reveal">
+      <div class="deliv-check">✓</div>
+      <div class="deliv-text"><strong>Bônus:</strong> 7 hábitos que mudam sua autoestima</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof">
+  <div class="section-label">Depoimentos</div>
+  <h2 class="section-title reveal">Quem já tem, amou 💖</h2>
+
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"Nunca pensei que por R$ 9,90 teria acesso a um material tão completo. Já mudei minha rotina de skincare e tô me sentindo outra pessoa."</p>
+      <div class="proof-author">— Ana C., São Paulo</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"A parte dos exames preventivos me abriu o olho! Nunca tinha parado pra pensar nisso. Já marquei 3 exames que estava adiando faz tempo."</p>
+      <div class="proof-author">— Juliana R., Curitiba</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-stars">★★★★★</div>
+      <p class="proof-text">"O bônus dos 7 hábitos de autoestima vale mais do que o preço inteiro. Simples, direto e funciona. Recomendo demais!"</p>
+      <div class="proof-author">— Fernanda M., Maringá</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2 class="reveal">Sua <em>autoestima</em> agradece.<br>Sua saúde também.</h2>
+  <p class="reveal">Acesso imediato após o pagamento. Funciona no celular, tablet e computador. Sem mensalidade — é seu para sempre.</p>
+
+  <div class="cta-box reveal">
+    <div class="cta-price-from">De R$ 29,90</div>
+    <div class="cta-price"><sup>R$</sup> 9,90</div>
+    <div class="cta-pix">no Pix · acesso imediato</div>
+    <a href="COLE_AQUI_LINK_MERCADO_PAGO" class="cta-btn">
+      Quero meu Checklist agora
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="cta-secure">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Pagamento 100% seguro via Mercado Pago
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Checklist de Beleza & Saúde — Material digital · Todos os direitos reservados
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
